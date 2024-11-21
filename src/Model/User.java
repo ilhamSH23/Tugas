@@ -3,12 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Form;
+package Model;
 
 /**
  *
  * @author Client
  */
 public class User {
+    static String role;
+
+    public static String getRole() {
+        return role;
+    }
+
+    public static void setRole(String role) {
+        User.role = role;
+    }
+
+    public User() {
+    }
+    }
     
-}
+

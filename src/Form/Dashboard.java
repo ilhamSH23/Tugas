@@ -5,17 +5,53 @@
  */
 package Form;
 
+import Model.User;
+import java.awt.Color;
+import java.awt.Component;
+import java.beans.PropertyVetoException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JInternalFrame;
+
 /**
  *
  * @author Client
  */
 public class Dashboard extends javax.swing.JFrame {
 
+    private final Color fontMouseEnter = Color.WHITE;
+    private final Color fontMouseExit = new Color(192, 192, 192);
+    private final Color mouseEnter = Color.BLUE;
+    private final Color mouseExit = new Color(0, 255, 255);
+
+    Pelanggan pelanggan = null;
+    Barang barang = null;
+
+    private void closeForm() {
+        for (JInternalFrame frm : Tdekstop.getAllFrames()) {
+            frm.dispose();
+        }
+    }
+
+    private void setSelectionMenu(Component menu) {
+        for (Component obj : jPanel1.getComponents()) {
+            if (obj.getName() == null) {
+                obj.setBackground(mouseExit);
+                obj.setForeground(fontMouseExit);
+            }
+        }
+        menu.setBackground(mouseEnter);
+        menu.setForeground(fontMouseEnter);
+    }
+
     /**
      * Creates new form Login
      */
     public Dashboard() {
         initComponents();
+        if (User.getRole().equals("kasir")) {
+            jLabel4.setVisible(false);
+        }
     }
 
     /**
@@ -27,26 +63,80 @@ public class Dashboard extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        desktopPane = new javax.swing.JDesktopPane();
+        Tdekstop = new javax.swing.JDesktopPane();
+        jPanel1 = new javax.swing.JPanel();
+        J1 = new javax.swing.JLabel();
+        J2 = new javax.swing.JLabel();
+        J3 = new javax.swing.JLabel();
+        J4 = new javax.swing.JLabel();
+        J5 = new javax.swing.JLabel();
         menuBar = new javax.swing.JMenuBar();
-        helpMenu = new javax.swing.JMenu();
-        contentMenuItem = new javax.swing.JMenuItem();
-        aboutMenuItem = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        helpMenu.setMnemonic('h');
-        helpMenu.setText("Help");
+        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        contentMenuItem.setMnemonic('c');
-        contentMenuItem.setText("Contents");
-        helpMenu.add(contentMenuItem);
+        J1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        J1.setText("Dashboard");
+        J1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        J1.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+                J1AncestorAdded(evt);
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+        });
 
-        aboutMenuItem.setMnemonic('a');
-        aboutMenuItem.setText("About");
-        helpMenu.add(aboutMenuItem);
+        J2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        J2.setText("Dashboard");
+        J2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        menuBar.add(helpMenu);
+        J3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        J3.setText("Dashboard");
+        J3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        J4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        J4.setText("Dashboard");
+        J4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        J5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        J5.setText("Dashboard");
+        J5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(36, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(J1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(J2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(J3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(J4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(J5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(45, 45, 45))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(152, 152, 152)
+                .addComponent(J1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(J2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(J3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(J4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(34, 34, 34)
+                .addComponent(J5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(123, Short.MAX_VALUE))
+        );
+
+        Tdekstop.add(jPanel1);
+        jPanel1.setBounds(0, 0, 230, 600);
 
         setJMenuBar(menuBar);
 
@@ -54,15 +144,34 @@ public class Dashboard extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Tdekstop, javax.swing.GroupLayout.PREFERRED_SIZE, 1295, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(desktopPane, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(Tdekstop, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        pack();
+        setSize(new java.awt.Dimension(1311, 655));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void J1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_J1AncestorAdded
+        // TODO add your handling code here:
+        closeForm();
+        setSelectionMenu(J1);
+        pelanggan = new Pelanggan();
+        jDesktopPane1.add(pelanggan);
+        pelanggan.setVisible(true);
+        try {
+            pelanggan.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(DashboardAdmin.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_J1AncestorAdded
 
     /**
      * @param args the command line arguments
@@ -101,10 +210,13 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem aboutMenuItem;
-    private javax.swing.JMenuItem contentMenuItem;
-    private javax.swing.JDesktopPane desktopPane;
-    private javax.swing.JMenu helpMenu;
+    private javax.swing.JLabel J1;
+    private javax.swing.JLabel J2;
+    private javax.swing.JLabel J3;
+    private javax.swing.JLabel J4;
+    private javax.swing.JLabel J5;
+    private javax.swing.JDesktopPane Tdekstop;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
 
