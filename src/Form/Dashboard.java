@@ -11,6 +11,7 @@ import java.awt.Component;
 import java.beans.PropertyVetoException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JDesktopPane;
 import javax.swing.JInternalFrame;
 
 /**
@@ -164,12 +165,12 @@ public class Dashboard extends javax.swing.JFrame {
         closeForm();
         setSelectionMenu(J1);
         pelanggan = new Pelanggan();
-        jDesktopPane1.add(pelanggan);
+        Tdekstop.add(pelanggan);
         pelanggan.setVisible(true);
         try {
             pelanggan.setMaximum(true);
         } catch (PropertyVetoException ex) {
-            Logger.getLogger(DashboardAdmin.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_J1AncestorAdded
 
