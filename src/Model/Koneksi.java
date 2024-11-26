@@ -21,10 +21,10 @@ public class Koneksi {
     public static Connection getconnection(){
         try {
             Class.forName("com.mysql.jdbc.Driver");
-               Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/project_toko","root","");
+               Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/aplikasi_kasir","root","");
                return conn;
         } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(Database.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Koneksi.class.getName()).log(Level.SEVERE, null, ex);
             JOptionPane.showMessageDialog(null, ex);
             return null;
         } 

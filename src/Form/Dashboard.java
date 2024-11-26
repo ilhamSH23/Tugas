@@ -5,7 +5,7 @@
  */
 package Form;
 
-import Model.User;
+import Model.MUser;
 import java.awt.Color;
 import java.awt.Component;
 import java.beans.PropertyVetoException;
@@ -20,13 +20,11 @@ import javax.swing.JInternalFrame;
  */
 public class Dashboard extends javax.swing.JFrame {
 
-    private final Color fontMouseEnter = Color.WHITE;
-    private final Color fontMouseExit = new Color(192, 192, 192);
-    private final Color mouseEnter = Color.BLUE;
-    private final Color mouseExit = new Color(0, 255, 255);
-
-    Pelanggan pelanggan = null;
-    Barang barang = null;
+    EntriMeja meja = null;
+    EntriMenu barang = null;
+    EntriOrder order = null;
+    User TUser = null;
+    GenerateLaporan laporan = null;
 
     private void closeForm() {
         for (JInternalFrame frm : Tdekstop.getAllFrames()) {
@@ -34,25 +32,32 @@ public class Dashboard extends javax.swing.JFrame {
         }
     }
 
-    private void setSelectionMenu(Component menu) {
-        for (Component obj : jPanel1.getComponents()) {
-            if (obj.getName() == null) {
-                obj.setBackground(mouseExit);
-                obj.setForeground(fontMouseExit);
-            }
-        }
-        menu.setBackground(mouseEnter);
-        menu.setForeground(fontMouseEnter);
-    }
-
     /**
      * Creates new form Login
      */
     public Dashboard() {
         initComponents();
-        if (User.getRole().equals("kasir")) {
-            jLabel4.setVisible(false);
+        if (MUser.getRole().equals("admin")) {
+            Entri_order.setVisible(false);
+            User.setVisible(false);
+            Generate_laporan.setVisible(false);
         }
+        if (MUser.getRole().equals("waiter")) {
+            Entri_meja.setVisible(false);
+            User.setVisible(false);
+        }
+        if (MUser.getRole().equals("kasir")) {
+            Entri_meja.setVisible(false);
+            Entri_barang.setVisible(false);
+            Entri_order.setVisible(false);
+        }
+        if (MUser.getRole().equals("owner")) {
+            Entri_meja.setVisible(false);
+            Entri_barang.setVisible(false);
+            Entri_order.setVisible(false);
+            User.setVisible(false);
+        }
+
     }
 
     /**
@@ -66,78 +71,107 @@ public class Dashboard extends javax.swing.JFrame {
 
         Tdekstop = new javax.swing.JDesktopPane();
         jPanel1 = new javax.swing.JPanel();
-        J1 = new javax.swing.JLabel();
-        J2 = new javax.swing.JLabel();
-        J3 = new javax.swing.JLabel();
-        J4 = new javax.swing.JLabel();
-        J5 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
+        Dashboard = new javax.swing.JButton();
+        Entri_meja = new javax.swing.JButton();
+        Entri_barang = new javax.swing.JButton();
+        Entri_order = new javax.swing.JButton();
+        User = new javax.swing.JButton();
+        Generate_laporan = new javax.swing.JButton();
         menuBar = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
+        jPanel1.setBackground(new java.awt.Color(204, 255, 204));
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        J1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        J1.setText("Dashboard");
-        J1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        J1.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
-                J1AncestorAdded(evt);
-            }
-            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
-            }
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+        jButton1.setBackground(new java.awt.Color(255, 51, 51));
+        jButton1.setText("Log Out");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
             }
         });
 
-        J2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        J2.setText("Dashboard");
-        J2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        Dashboard.setBackground(new java.awt.Color(0, 153, 255));
+        Dashboard.setText("Dashboard");
 
-        J3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        J3.setText("Dashboard");
-        J3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        Entri_meja.setBackground(new java.awt.Color(0, 153, 255));
+        Entri_meja.setText("Entri Meja");
+        Entri_meja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Entri_mejaActionPerformed(evt);
+            }
+        });
 
-        J4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        J4.setText("Dashboard");
-        J4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        Entri_barang.setBackground(new java.awt.Color(0, 153, 255));
+        Entri_barang.setText("Menu");
+        Entri_barang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Entri_barangActionPerformed(evt);
+            }
+        });
 
-        J5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        J5.setText("Dashboard");
-        J5.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        Entri_order.setBackground(new java.awt.Color(0, 153, 255));
+        Entri_order.setText("Entri Order");
+        Entri_order.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Entri_orderActionPerformed(evt);
+            }
+        });
+
+        User.setBackground(new java.awt.Color(0, 153, 255));
+        User.setText("User");
+        User.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                UserActionPerformed(evt);
+            }
+        });
+
+        Generate_laporan.setBackground(new java.awt.Color(0, 153, 255));
+        Generate_laporan.setText("Generate Laporan");
+        Generate_laporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                Generate_laporanActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(36, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(J1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(J2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(J3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(J4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(J5, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(45, 45, 45))
+                .addGap(43, 43, 43)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(Entri_meja, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Dashboard, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Entri_barang, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Entri_order, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Generate_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(61, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(152, 152, 152)
-                .addComponent(J1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(J2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(J3, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(J4, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
-                .addComponent(J5, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(123, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(144, Short.MAX_VALUE)
+                .addComponent(Dashboard, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(Entri_meja, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(Entri_barang, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(Entri_order, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(User, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(40, 40, 40)
+                .addComponent(Generate_laporan, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(117, 117, 117))
         );
-
-        Tdekstop.add(jPanel1);
-        jPanel1.setBounds(0, 0, 230, 600);
 
         setJMenuBar(menuBar);
 
@@ -146,33 +180,94 @@ public class Dashboard extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(Tdekstop, javax.swing.GroupLayout.PREFERRED_SIZE, 1295, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(2, 2, 2)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Tdekstop, javax.swing.GroupLayout.PREFERRED_SIZE, 1150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(Tdekstop)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(Tdekstop, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        setSize(new java.awt.Dimension(1311, 655));
+        setSize(new java.awt.Dimension(1311, 720));
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void J1AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_J1AncestorAdded
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        dispose();
+
+    }//GEN-LAST:event_jButton1MouseClicked
+
+    private void Entri_mejaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Entri_mejaActionPerformed
         // TODO add your handling code here:
         closeForm();
-        setSelectionMenu(J1);
-        pelanggan = new Pelanggan();
-        Tdekstop.add(pelanggan);
-        pelanggan.setVisible(true);
+        meja = new EntriMeja();
+        Tdekstop.add(meja);
+        meja.setVisible(true);
         try {
-            pelanggan.setMaximum(true);
+            meja.setMaximum(true);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
         }
-    }//GEN-LAST:event_J1AncestorAdded
+    }//GEN-LAST:event_Entri_mejaActionPerformed
+
+    private void Entri_barangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Entri_barangActionPerformed
+        // TODO add your handling code here:
+        closeForm();
+        barang = new EntriMenu();
+        Tdekstop.add(barang);
+        barang.setVisible(true);
+        try {
+            barang.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_Entri_barangActionPerformed
+
+    private void Entri_orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Entri_orderActionPerformed
+        // TODO add your handling code here:
+        closeForm();
+        order = new EntriOrder();
+        Tdekstop.add(order);
+        order.setVisible(true);
+        try {
+            order.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_Entri_orderActionPerformed
+
+    private void UserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_UserActionPerformed
+        // TODO add your handling code here:
+        closeForm();
+        TUser = new User();
+        Tdekstop.add(TUser);
+        TUser.setVisible(true);
+        try {
+            TUser.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_UserActionPerformed
+
+    private void Generate_laporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_Generate_laporanActionPerformed
+        // TODO add your handling code here:
+        closeForm();
+        laporan = new GenerateLaporan();
+        Tdekstop.add(laporan);
+        laporan.setVisible(true);
+        try {
+            laporan.setMaximum(true);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(Dashboard.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_Generate_laporanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -211,12 +306,14 @@ public class Dashboard extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel J1;
-    private javax.swing.JLabel J2;
-    private javax.swing.JLabel J3;
-    private javax.swing.JLabel J4;
-    private javax.swing.JLabel J5;
+    private javax.swing.JButton Dashboard;
+    private javax.swing.JButton Entri_barang;
+    private javax.swing.JButton Entri_meja;
+    private javax.swing.JButton Entri_order;
+    private javax.swing.JButton Generate_laporan;
     private javax.swing.JDesktopPane Tdekstop;
+    private javax.swing.JButton User;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JMenuBar menuBar;
     // End of variables declaration//GEN-END:variables
